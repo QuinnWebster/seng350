@@ -2,8 +2,6 @@
 
 set -e
 
-echo " Starting Performance Quality Attribute Experimentation  "
-
 TOTAL_IMAGES_PER_CLIENT=600
 FREQUENCY_MS=200
 GI_PROBABILITY=100
@@ -26,16 +24,15 @@ C3_PID=$!
 wait $C1_PID
 wait $C2_PID
 wait $C3_PID
-echo "Completed, see analysis"
+echo "Done"
 
 sleep 1.0
 
 echo ""
-cat server_run.log | grep -A 4 "=== EXPERIMENT RUN RESULTS ===" || echo "Error: Profiler results missing from server logs."
+cat server_run.log | grep -A 4 "RESULTS" || echo "error"
 
 if kill -0 $SERVER_PID 2>/dev/null; then
     kill -9 $SERVER_PID
 fi
 
 # rm -f server_run.log
-echo "Experiment execution successfully processed."
